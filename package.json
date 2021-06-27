@@ -1,0 +1,44 @@
+{
+  "name": "reusable-plugins",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A Strapi application",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "npm run override-admin && strapi build",
+    "strapi": "strapi",
+    "override-admin": "node helper/admin-overrides.js"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.935.0",
+    "aws4": "^1.11.0",
+    "jwk-to-pem": "^2.0.5",
+    "knex": "0.21.18",
+    "koa-body-clean": "^1.0.0",
+    "mysql": "2.18.1",
+    "strapi": "3.6.5",
+    "strapi-admin": "3.6.5",
+    "strapi-connector-bookshelf": "3.6.5",
+    "strapi-plugin-content-manager": "3.6.5",
+    "strapi-plugin-content-type-builder": "3.6.5",
+    "strapi-plugin-email": "3.6.5",
+    "strapi-plugin-i18n": "3.6.5",
+    "strapi-plugin-preview-content": "^1.2.1",
+    "strapi-plugin-upload": "3.6.5",
+    "strapi-plugin-users-permissions": "3.6.5",
+    "strapi-utils": "3.6.5"
+  },
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "strapi": {
+    "uuid": "c3264d51-58bc-4b44-af87-6b94450ca87b"
+  },
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": "^6.0.0"
+  },
+  "license": "MIT"
+}
