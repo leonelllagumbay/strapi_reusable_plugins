@@ -112,6 +112,12 @@ module.exports = strapi => {
             controller: 'sso-aws-cognito',
             action: 'verifytoken',
             enabled: true,
+          }, {
+            type: 'sso-azure-ad',
+            role: userRole.id,
+            controller: 'sso-azure-ad',
+            action: 'verifytokenazureactivedirectory',
+            enabled: true,
           }];
         }
 

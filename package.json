@@ -12,6 +12,9 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "@azure/msal-browser": "^2.15.0",
+    "@azure/msal-node": "^1.2.0",
+    "@azure/msal-react": "^1.0.1",
     "aws-sdk": "^2.935.0",
     "aws4": "^1.11.0",
     "jwk-to-pem": "^2.0.5",

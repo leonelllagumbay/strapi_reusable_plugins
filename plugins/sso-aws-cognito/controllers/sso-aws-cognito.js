@@ -114,7 +114,13 @@ module.exports = {
         await strapi.query('user', 'admin').update({
           id: userModel.id
         }, {
-          roles: rolesToAdd
+          roles: rolesToAdd,
+          firstname: tokenInfo['given_name'],
+          lastname: tokenInfo['family_name'],
+          username: tokenInfo['cognito:username'],
+          email: tokenInfo.email,
+          isActive: true,
+          blocked: false,
         });
       } else {
         for (let role of roleMap) {
@@ -131,7 +137,9 @@ module.exports = {
           email: tokenInfo.email,
           roles: [rolesToAdd],
           isActive: true,
-          blocked: false
+          blocked: false,
+          firstname: tokenInfo['given_name'],
+          lastname: tokenInfo['family_name']
         })
       }
 

@@ -15,10 +15,12 @@ import formatAPIErrors from '../../utils/formatAPIErrors';
 import init from './init';
 import { initialState, reducer } from './reducer';
 import useChangeLanguage from '../LanguageProvider/hooks/useChangeLanguage';
+import AzureLogin from './AzureLogin';
 
 // import * as aws4 from "aws4";
 import AWS from "aws-sdk";
 
+// AWS Cognito
 let idToken = "";
 const cognitoReturnedToken = location.hash;
 if (cognitoReturnedToken) {
@@ -35,66 +37,43 @@ if (cognitoReturnedToken) {
 
 const AuthPage = ({ hasAdmin, setHasAdmin }) => {
 
+
   useEffect(() => {
-    
-    console.log('id token 2', idToken);
+    if (!idToken) {
+      // location.href = "https://leonelllagumbay.auth.us-east-1.amazoncognito.com/login?client_id=61ishi28kmir29u75p0qpih5pv&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:8000/admin/auth/login";
+    }
+  
     // Override login to AWS cognito
     if (idToken) {
-      const region = 'us-east-1';
-      const userPoolId = 'us-east-1_DZcKJ4Eeb';
-      const identityPoolId = 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
-      AWS.config.region = region;
-
-      const Logins = {};
-      Logins[
-        `cognito-idp.${region}.amazonaws.com/${userPoolId}`
-      ] = idToken;
-      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: identityPoolId,
-        Logins,
-      });
-
-      AWS.config.credentials.get(async (err) => {
-        if (!err) {
-          await verifyToken({
+      console.log('id token 2', idToken);
+      setTimeout(async () => {
+        await verifyToken({
             ssoToken: idToken
           }, '/verifyToken');
-          // const credentials = AWS.config?.credentials?.data?.Credentials;
-          // const accessKeyId = credentials.AccessKeyId;
-          // const secretAccessKey = credentials.SecretKey;
-          // // Expiration
-          // const sessionToken = credentials.SessionToken;
-          // const url = 'https://406j894wt0.execute-api.us-east-1.amazonaws.com/Develop/users';
+      }, 100);
+      // const region = 'us-east-1';
+      // const userPoolId = 'us-east-1_DZcKJ4Eeb';
+      // const identityPoolId = 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
+      // AWS.config.region = region;
 
-          // console.log("yet another try", accessKeyId, secretAccessKey, sessionToken);
-          // let request = {
-          //   host: '406j894wt0.execute-api.us-east-1.amazonaws.com',
-          //   method: "GET",
-          //   url: `https://406j894wt0.execute-api.us-east-1.amazonaws.com/Develop/users`,
-          //   path: "/Develop/users",
-          // };
+      // const Logins = {};
+      // Logins[
+      //   `cognito-idp.${region}.amazonaws.com/${userPoolId}`
+      // ] = idToken;
+      // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+      //   IdentityPoolId: identityPoolId,
+      //   Logins,
+      // });
 
-          // let signedRequest = aws4.sign(request, {
-          //   secretAccessKey,
-          //   accessKeyId,
-          //   sessionToken,
-          // });
-
-          // delete signedRequest.headers["Host"];
-          // delete signedRequest.headers["Content-Length"];
-
-          // console.log("response 2 signedRequest", signedRequest);
-          // fetch(url, signedRequest)
-          //   .then( result => {
-          //     console.log('result', result);
-          //   })
-          //   .catch(error => console.log('error', error));
-          
-      //   } else {
-      //     console.log("get creds err", err);
-        }
-      });
-    }
+      // AWS.config.credentials.get(async (err) => {
+      //   if (!err) {
+      //     await verifyToken({
+      //       ssoToken: idToken
+      //     }, '/verifyToken');
+      //   }
+      // });
+    } 
+  
     // End Override login to AWS cognitor
   }, []);
 
@@ -416,35 +395,28 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
     return <Redirect to="/auth/register-admin" />;
   }
 
-  // Custom
-  if (!idToken) {
-    location.href = "https://leonelllagumbay.auth.us-east-1.amazoncognito.com/login?client_id=61ishi28kmir29u75p0qpih5pv&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:8000/admin/auth/login";
-  } 
-
   return (
-    <div></div>
-  )
-
-  // return (
-  //   <Padded bottom size="md">
-  //     <PageTitle title={upperFirst(authType)} />
-  //     <NavTopRightWrapper>
-  //       <LocaleToggle isLogged className="localeDropdownMenuNotLogged" />
-  //     </NavTopRightWrapper>
-  //     <BaselineAlignment top size="78px">
-  //       <Component
-  //         {...rest}
-  //         fieldsToDisable={fieldsToDisable}
-  //         formErrors={formErrors}
-  //         inputsPrefix={inputsPrefix}
-  //         modifiedData={modifiedData}
-  //         onChange={handleChange}
-  //         onSubmit={handleSubmit}
-  //         requestError={requestError}
-  //       />
-  //     </BaselineAlignment>
-  //   </Padded>
-  // );
+    <AzureLogin>
+      <Padded bottom size="md">
+        <PageTitle title={upperFirst(authType)} />
+        <NavTopRightWrapper>
+          <LocaleToggle isLogged className="localeDropdownMenuNotLogged" />
+        </NavTopRightWrapper>
+        <BaselineAlignment top size="78px">
+          <Component
+            {...rest}
+            fieldsToDisable={fieldsToDisable}
+            formErrors={formErrors}
+            inputsPrefix={inputsPrefix}
+            modifiedData={modifiedData}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            requestError={requestError}
+          />
+        </BaselineAlignment>
+      </Padded>
+    </AzureLogin>
+  );
   // End custom
 };
 

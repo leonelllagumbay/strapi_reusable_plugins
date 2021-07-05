@@ -1,0 +1,21 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/",
+      "handler": "sso-azure-ad.index",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/verifyTokenAzureActiveDirectory",
+      "handler": "sso-azure-ad.verifyTokenAzureActiveDirectory",
+      "config": {
+        "policies": [],
+        "prefix": "sso-azure-ad"
+      }
+    }
+  ]
+}
