@@ -15,7 +15,6 @@ if (azureReturnCode) {
     const indexOfCode = part.indexOf("code");
     if (indexOfCode > -1) {
       azureCode = part.substring(indexOfCode + 5, part.length);
-      localStorage.setItem("azure_code", azureCode);
     }
   });
 }

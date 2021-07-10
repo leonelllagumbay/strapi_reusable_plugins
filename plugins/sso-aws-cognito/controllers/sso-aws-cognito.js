@@ -1,6 +1,6 @@
 'use strict';
 
-const aws4 = require('aws4');
+// const aws4 = require('aws4');
 const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
@@ -101,7 +101,6 @@ module.exports = {
       let rolesToAdd = [];
       if (userModel) {
         // Update user role
-        rolesToAdd = [...userModel.roles];
         for (let role of roleMap) {
           if (tokenInfo['cognito:roles'].indexOf(role.awsRole) > -1) {
             const correspondingRoleInStapi = await strapi.query('role', 'admin').findOne({
@@ -162,5 +161,23 @@ module.exports = {
 
     // Map user role
     // Create user if not exist in Strapi
-  }
+  },
+
+  getSettings: async (ctx) => {
+    const data = await strapi.plugins['sso-aws-cognito'].services['sso-aws-cognito'].getSettings();
+
+    ctx.body = { data };
+  },
+
+  updateSettings: async (ctx) => {
+    const {
+      request: { body },
+    } = ctx;
+
+    console.log('update settings body', body);
+
+    await strapi.plugins['sso-aws-cognito'].services['sso-aws-cognito'].setSettings(body);
+
+    ctx.body = { data };
+  },
 };

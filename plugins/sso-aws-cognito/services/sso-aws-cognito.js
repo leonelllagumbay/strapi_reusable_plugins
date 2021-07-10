@@ -9,5 +9,25 @@
 module.exports = {
   getCognitoProfileInfo: async () => {
     // https://<your-user-pool-domain>/oauth2/userInfo
-  }
+  },
+
+  getSettings() {
+    return strapi
+      .store({
+        type: 'plugin',
+        name: 'upload',
+        key: 'settings',
+      })
+      .get();
+  },
+
+  setSettings(value) {
+    return strapi
+      .store({
+        type: 'plugin',
+        name: 'upload',
+        key: 'settings',
+      })
+      .set({ value });
+  },
 };

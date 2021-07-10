@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "intents",
+  "info": {
+    "name": "Intent"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Tag": {
+      "type": "string"
+    },
+    "ContextSet": {
+      "type": "string"
+    },
+    "ContextFilter": {
+      "type": "string"
+    },
+    "Patterns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "pattern.pattern"
+    },
+    "Responses": {
+      "type": "component",
+      "repeatable": true,
+      "component": "response.response"
+    }
+  }
+}

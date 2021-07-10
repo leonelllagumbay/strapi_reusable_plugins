@@ -13,8 +13,10 @@ import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reac
 import { get } from 'lodash';
 import { auth } from 'strapi-helper-plugin';
 import Wrapper from './components';
+import { useMsal } from "@azure/msal-react"; // Custom Azure logout
 
 const Logout = ({ history: { push } }) => {
+  const { instance } = useMsal(); // Custom Azure logout
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGoToMe = () => {
@@ -25,7 +27,16 @@ const Logout = ({ history: { push } }) => {
 
   const handleLogout = () => {
     auth.clearAppStorage();
-    push('/auth/login');
+
+    // Custom AWS Cognitor
+    const clientId = '61ishi28kmir29u75p0qpih5pv';
+    const logoutUri = 'http://localhost:8000/admin/auth/login';
+    location.href = `https://leonelllagumbay.auth.us-east-1.amazoncognito.com/logout?client_id=${clientId}&logout_uri=${logoutUri}&redirect_uri=${logoutUri}&response_type=token`;
+    // Custom Azure logout
+    // instance.logoutRedirect({
+    //   postLogoutRedirectUri: "/",
+    // });
+    // push('/auth/login');
   };
 
   const toggle = () => setIsOpen(prev => !prev);

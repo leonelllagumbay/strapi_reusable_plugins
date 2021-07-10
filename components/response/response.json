@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_response_responses",
+  "info": {
+    "name": "Response",
+    "icon": "arrow-alt-circle-left"
+  },
+  "options": {},
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  }
+}

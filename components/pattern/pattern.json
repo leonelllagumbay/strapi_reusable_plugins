@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_pattern_patterns",
+  "info": {
+    "name": "Pattern",
+    "icon": "adjust"
+  },
+  "options": {},
+  "attributes": {
+    "Text": {
+      "type": "string"
+    }
+  }
+}

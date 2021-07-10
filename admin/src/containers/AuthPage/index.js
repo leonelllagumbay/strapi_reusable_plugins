@@ -16,66 +16,9 @@ import init from './init';
 import { initialState, reducer } from './reducer';
 import useChangeLanguage from '../LanguageProvider/hooks/useChangeLanguage';
 import AzureLogin from './AzureLogin';
-
-// import * as aws4 from "aws4";
-import AWS from "aws-sdk";
-
-// AWS Cognito
-let idToken = "";
-const cognitoReturnedToken = location.hash;
-if (cognitoReturnedToken) {
-  const hashParts = cognitoReturnedToken.split("&");
-
-  hashParts.forEach((part) => {
-    const indexOfTokenStr = part.indexOf("id_token");
-    if (indexOfTokenStr > -1) {
-      idToken = part.substring(indexOfTokenStr + 9, part.length);
-      localStorage.setItem("aws_id_token", idToken);
-    }
-  });
-}
+import AwsCognitoLogin from './AwsCognitoLogin';
 
 const AuthPage = ({ hasAdmin, setHasAdmin }) => {
-
-
-  useEffect(() => {
-    if (!idToken) {
-      // location.href = "https://leonelllagumbay.auth.us-east-1.amazoncognito.com/login?client_id=61ishi28kmir29u75p0qpih5pv&response_type=token&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=http://localhost:8000/admin/auth/login";
-    }
-  
-    // Override login to AWS cognito
-    if (idToken) {
-      console.log('id token 2', idToken);
-      setTimeout(async () => {
-        await verifyToken({
-            ssoToken: idToken
-          }, '/verifyToken');
-      }, 100);
-      // const region = 'us-east-1';
-      // const userPoolId = 'us-east-1_DZcKJ4Eeb';
-      // const identityPoolId = 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
-      // AWS.config.region = region;
-
-      // const Logins = {};
-      // Logins[
-      //   `cognito-idp.${region}.amazonaws.com/${userPoolId}`
-      // ] = idToken;
-      // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      //   IdentityPoolId: identityPoolId,
-      //   Logins,
-      // });
-
-      // AWS.config.credentials.get(async (err) => {
-      //   if (!err) {
-      //     await verifyToken({
-      //       ssoToken: idToken
-      //     }, '/verifyToken');
-      //   }
-      // });
-    } 
-  
-    // End Override login to AWS cognitor
-  }, []);
 
   const { push } = useHistory();
   const changeLocale = useChangeLanguage();
@@ -257,54 +200,6 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
     }
   };
 
-  // Extension ==> Verify Token
-  const verifyToken = async (body, requestURL) => {
-    try {
-      const {
-        data: {
-          data: { token, user },
-        },
-      } = await axios({
-        method: 'POST',
-        url: `${strapi.backendURL}${requestURL}`,
-        data: body,
-        cancelToken: source.token,
-      });
-
-      if (user.preferedLanguage) {
-        changeLocale(user.preferedLanguage);
-      }
-
-      auth.setToken(token, modifiedData.rememberMe);
-      auth.setUserInfo(user, modifiedData.rememberMe);
-
-      idToken = "";
-      push('/');
-    } catch (err) {
-      if (err.response) {
-        const errorMessage = get(err, ['response', 'data', 'message'], 'Something went wrong');
-        const errorStatus = get(err, ['response', 'data', 'statusCode'], 400);
-
-        if (camelCase(errorMessage).toLowerCase() === 'usernotactive') {
-          push('/auth/oops');
-
-          dispatch({
-            type: 'RESET_PROPS',
-          });
-
-          return;
-        }
-
-        dispatch({
-          type: 'SET_REQUEST_ERROR',
-          errorMessage,
-          errorStatus,
-        });
-      }
-    }
-  };
-  // End extension verify token
-
   const registerRequest = async (body, requestURL) => {
     try {
       const {
@@ -396,7 +291,8 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
   }
 
   return (
-    <AzureLogin>
+    // <AzureLogin>
+    <AwsCognitoLogin>
       <Padded bottom size="md">
         <PageTitle title={upperFirst(authType)} />
         <NavTopRightWrapper>
@@ -415,7 +311,8 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
           />
         </BaselineAlignment>
       </Padded>
-    </AzureLogin>
+    </AwsCognitoLogin>
+    //</AzureLogin>
   );
   // End custom
 };

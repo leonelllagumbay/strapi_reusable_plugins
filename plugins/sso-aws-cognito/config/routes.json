@@ -16,6 +16,22 @@
         "policies": [],
         "prefix": ""
       }
+    },
+    {
+      "method": "GET",
+      "path": "/settings",
+      "handler": "sso-aws-cognito.getSettings",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/settings",
+      "handler": "sso-aws-cognito.updateSettings",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

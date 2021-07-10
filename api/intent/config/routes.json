@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/plugin-lists",
-      "handler": "plugin-list.find",
+      "path": "/intents",
+      "handler": "intent.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/plugin-lists/count",
-      "handler": "plugin-list.count",
+      "path": "/intents/count",
+      "handler": "intent.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/plugin-lists/:id",
-      "handler": "plugin-list.findOne",
+      "path": "/intents/:id",
+      "handler": "intent.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/plugin-lists",
-      "handler": "plugin-list.create",
+      "path": "/intents",
+      "handler": "intent.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/plugin-lists/:id",
-      "handler": "plugin-list.update",
+      "path": "/intents/:id",
+      "handler": "intent.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/plugin-lists/:id",
-      "handler": "plugin-list.delete",
+      "path": "/intents/:id",
+      "handler": "intent.delete",
       "config": {
         "policies": []
       }
