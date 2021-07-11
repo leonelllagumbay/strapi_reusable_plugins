@@ -193,10 +193,20 @@ const createModel = () => {
   // Fit the model
   // this.model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
 
-  dataModel.fit(xs, ys, { epochs: 200, batch_size: 7, verbose: 1 }).then(() => {
+  dataModel.fit(xs, ys, { epochs: 200, batch_size: 7, verbose: 1 }).then(async () => {
     console.log('modeling fit complete');
     // Save the model in session storage
     modelFitComplete = true;
+
+    await strapi.query('chatbot-model').update({}, {
+      Words: words,
+      Classes: classes,
+      IntentsData: intentsData,
+      Release: 1
+    });
+
+    await dataModel.save(`file://./public/model`);
+
     predict();
     // sessionStorage.setItem(tfModel, JSON.stringify(this.model));
     // (dataModel.predict(tf.tensor2d(this.trainX[0], [1, this.trainX[0].length])) as any).print();
@@ -207,7 +217,7 @@ const createModel = () => {
 
 const predict = () => {
 
-  const question = 'laterthisweek';
+  const question = 'morning';
   // Transform question to input
   const xs = transformQuestionToTensor(question);
   console.log('xs', xs);

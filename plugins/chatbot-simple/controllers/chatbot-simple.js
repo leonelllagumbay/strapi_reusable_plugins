@@ -1,5 +1,7 @@
 'use strict';
 
+const { default: createStrapi } = require("strapi");
+
 /**
  * chatbot-simple.js controller
  *
@@ -20,6 +22,13 @@ module.exports = {
     // Send 200 `ok`
     ctx.send({
       message: 'ok'
+    });
+  },
+
+  model: async (ctx) => {
+    console.log('strapi', strapi);
+    ctx.send({
+      message: true
     });
   }
 };

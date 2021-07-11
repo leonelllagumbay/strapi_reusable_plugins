@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "chatbot_models",
+  "info": {
+    "name": "ChatbotModel",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Words": {
+      "type": "json"
+    },
+    "Release": {
+      "type": "integer"
+    },
+    "Classes": {
+      "type": "json"
+    },
+    "IntentsData": {
+      "type": "json"
+    }
+  }
+}
