@@ -28,13 +28,8 @@ const Logout = ({ history: { push } }) => {
   const handleLogout = () => {
     auth.clearAppStorage();
 
-    // Custom AWS Cognitor
+    // Custom AWS Cognito
     location.href = `${FE_CUSTOM_VARIABLES.COGNITO_DOMAIN}/logout?client_id=${FE_CUSTOM_VARIABLES.COGNITO_CLIENT_ID}&logout_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&redirect_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&response_type=token`;
-    // Custom Azure logout
-    // instance.logoutRedirect({
-    //   postLogoutRedirectUri: "/",
-    // });
-    // push('/auth/login');
   };
 
   const toggle = () => setIsOpen(prev => !prev);
