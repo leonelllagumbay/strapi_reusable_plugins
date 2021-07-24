@@ -15,7 +15,6 @@ module.exports = strapi => {
     async initialize() {
       try {
         // Make sure verifytoken api is public
-        console.log('public role');
         const userRole = await strapi.query('role', 'users-permissions').findOne({
           name: 'Public'
         }, ['name']);

@@ -4,19 +4,10 @@ const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
 
-// [{
-//   awsRole: 'arn:aws:iam::994583806537:role/Admin',
-//   strapiRole: 'Super Admin'
-// }, {
-//   awsRole: 'arn:aws:iam::994583806537:role/Technologist',
-//   strapiRole: 'Technologist'
-// }];
-
 const getTokenInfo = (ssoToken) => {
   return new Promise(async (resolve, reject) => {
     AWS.config.credentials.get(async (err) => {
       if (!err) {
-        console.log('process.env.COGNITO_JWKS', process.env.COGNITO_JWKS);
         const jwks = process.env.COGNITO_JWKS ? JSON.parse(process.env.COGNITO_JWKS) : {};
         // See Amazon cognito API to get jwks
         // { "keys": [{ "alg": "RS256", "e": "AQAB", "kid": "Z2MsSpAMRQTIFjNSk1srITFdyfgZWM0ixym7PpyGZMs=", "kty": "RSA", "n": "wpKO6kRICmnE-Q_eVI5C7OB2xHgehu9EC6RvczvUEB3orV8wjltYKFN6kfqUawIKyPPKgUEZKasuPTlMlNExZZEtJL2EYC94EcdZWprXDdnutNWYMcciLsg9Kr1PzFnsgrDRpJRQMxxVk7xXj1SLMJLqlqQreuqBeNE6AtAGBrJJKuzsAO_2J9bgG-DGSN79R5lKKqzxvj1ZhcA95wiC5nN9vykUbkKDaV3-nfniE_BVvSMjnO-y_NDFpVA60MmTWJVlrvs4lGsIMMhI17kHzEk0Lfan44y02L-jIA1ygATUP8wcJFLOVY1WYbLW9KSg2G3594ux9HF_ps5q-klj-w", "use": "sig" }, { "alg": "RS256", "e": "AQAB", "kid": "T1wa7JZwouSg/hrnWMnmSnS6CT6E7TAy/bk2Arfwm3Q=", "kty": "RSA", "n": "tYuW15Eo0GMiLPwCcEd3LmXR3J1U1aW8qkm31dkqGFmSzXe5D8j7tIEfWwyfuwyKLMNfDYhI9mTZIiZrqgcRP9bp9xdxJLGY86rZiU9Zapx4XtGbJii2Rrjyz3TZ4leSien00SY7PYMk45w_Zx1A6xZ517cxLHuyFHRK0LepX5Q4zLydqzU3GfkKR1Fkxib0OMEybe0Dt9fJBeupwi5a5u--zZNvOX1QoD8ud4NSL-Si7sbbIpXeOfCjTMMxe5LSREv2_7wKsVSbhxHayMJlsjQLhjWNWSL_jTjrWZvvzwfVf6fwok_HIPwvxng90txBy8OXUzlkIzNgS1UTthRuzw", "use": "sig" }] };
@@ -86,11 +77,11 @@ module.exports = {
         email: tokenInfo.email
       });
       let rolesToAdd = [];
+      // Update user role
+      // Map your user's AWS Cognito roles to Strapi roles
+      const roleMap = process.env.COGNITO_ROLE_MAPPING ? JSON.parse(process.env.COGNITO_ROLE_MAPPING) : [];
+
       if (userModel) {
-        // Update user role
-        // Map your user's AWS Cognito roles to Strapi roles
-        const roleMap = process.env.COGNITO_ROLE_MAPPING ? JSON.parse(process.env.COGNITO_ROLE_MAPPING) : [];
-        console.log('role map', roleMap);
         for (let role of roleMap) {
           if (tokenInfo['cognito:roles'].indexOf(role.awsRole) > -1) {
             const correspondingRoleInStapi = await strapi.query('role', 'admin').findOne({
@@ -114,7 +105,6 @@ module.exports = {
       } else {
         for (let role of roleMap) {
           if (tokenInfo['cognito:roles'].indexOf(role.awsRole) > -1) {
-            console.log('role.strapiRole', role.strapiRole);
             const correspondingRoleInStapi = await strapi.query('role', 'admin').findOne({
               name: role.strapiRole
             }, ['name']);

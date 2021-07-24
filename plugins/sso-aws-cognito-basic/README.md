@@ -20,7 +20,7 @@ yarn add strapi-plugin-sso-aws-cognito-basic
 
 # Copy required files
 
-Inside plugin strapi-files copy adminCode/admin to admin/ project root directory
+Inside plugin strapi-files admin to admin/ project root directory and copy hooks.js to Strapi config. Also copy the hooks folder to the Strapi root directory.
 
 # Setup up environment variables like so
 
@@ -35,6 +35,22 @@ COGNITO_USER_POOL_ID=us-east-1_DdcKJ1Eeb
 COGNITO_IDENTITY_POOL_ID=us-east-1:122db3b7-3232-45c2-8c93-abbcad58de1f
 COGNITO_ROLE_MAPPING=[{"awsRole":"arn:aws:iam::994583806537:role/Admin","strapiRole":"Super Admin"},{"awsRole":"arn:aws:iam::994583806537:role/Technologist","strapiRole":"Technologist"}]
 COGNITO_JWKS={"keys":[{"alg":"RS256","e":"AQAB","kid":"Z2MsSpAMRQTIFjNSk1srITFdyfgZWM0ixym7PpyGZMs=","kty":"RSA","n":"wpKO6kRICmnE...","use":"sig"},{"alg":"RS256","e":"AQAB","kid":"T1wa7JZwouSg/hrnWMnmSnS6CT6E7TAy/bk2Arfwm3Q=","kty":"RSA","n":"tYuW15E...","use":"sig"}]}
+
+## For COGNITO_ROLE_MAPPING, the original data is:
+
+[{
+   awsRole: 'arn:aws:iam::994583806537:role/Admin',
+   strapiRole: 'Super Admin'
+ }, {
+   awsRole: 'arn:aws:iam::994583806537:role/Technologist',
+   strapiRole: 'Technologist'
+}]
+
+## then converted to string like so
+
+[{"awsRole":"arn:aws:iam::994583806537:role/Admin","strapiRole":"Super Admin"},{"awsRole":"arn:aws:iam::994583806537:role/Technologist","strapiRole":"Technologist"}]
+
+
 
 It is required that you map your Strapi roles to the corresponding role from AWS Cognito.
 

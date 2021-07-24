@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-sso-aws-cognito-basic",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "sso-aws-cognito-basic",
