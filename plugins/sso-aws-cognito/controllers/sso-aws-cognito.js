@@ -1,36 +1,28 @@
 'use strict';
 
-// const aws4 = require('aws4');
 const AWS = require('aws-sdk');
 const jwt = require('jsonwebtoken');
 const jwkToPem = require('jwk-to-pem');
-const jwks = {"keys":[{"alg":"RS256","e":"AQAB","kid":"Z2MsSpAMRQTIFjNSk1srITFdyfgZWM0ixym7PpyGZMs=","kty":"RSA","n":"wpKO6kRICmnE-Q_eVI5C7OB2xHgehu9EC6RvczvUEB3orV8wjltYKFN6kfqUawIKyPPKgUEZKasuPTlMlNExZZEtJL2EYC94EcdZWprXDdnutNWYMcciLsg9Kr1PzFnsgrDRpJRQMxxVk7xXj1SLMJLqlqQreuqBeNE6AtAGBrJJKuzsAO_2J9bgG-DGSN79R5lKKqzxvj1ZhcA95wiC5nN9vykUbkKDaV3-nfniE_BVvSMjnO-y_NDFpVA60MmTWJVlrvs4lGsIMMhI17kHzEk0Lfan44y02L-jIA1ygATUP8wcJFLOVY1WYbLW9KSg2G3594ux9HF_ps5q-klj-w","use":"sig"},{"alg":"RS256","e":"AQAB","kid":"T1wa7JZwouSg/hrnWMnmSnS6CT6E7TAy/bk2Arfwm3Q=","kty":"RSA","n":"tYuW15Eo0GMiLPwCcEd3LmXR3J1U1aW8qkm31dkqGFmSzXe5D8j7tIEfWwyfuwyKLMNfDYhI9mTZIiZrqgcRP9bp9xdxJLGY86rZiU9Zapx4XtGbJii2Rrjyz3TZ4leSien00SY7PYMk45w_Zx1A6xZ517cxLHuyFHRK0LepX5Q4zLydqzU3GfkKR1Fkxib0OMEybe0Dt9fJBeupwi5a5u--zZNvOX1QoD8ud4NSL-Si7sbbIpXeOfCjTMMxe5LSREv2_7wKsVSbhxHayMJlsjQLhjWNWSL_jTjrWZvvzwfVf6fwok_HIPwvxng90txBy8OXUzlkIzNgS1UTthRuzw","use":"sig"}]};
 
-const roleMap = [{
-  awsRole: 'arn:aws:iam::994583806537:role/Admin',
-  strapiRole: 'Super Admin'
-}, {
-  awsRole: 'arn:aws:iam::994583806537:role/Technologist',
-  strapiRole: 'Technologist'
-}];
+// [{
+//   awsRole: 'arn:aws:iam::994583806537:role/Admin',
+//   strapiRole: 'Super Admin'
+// }, {
+//   awsRole: 'arn:aws:iam::994583806537:role/Technologist',
+//   strapiRole: 'Technologist'
+// }];
 
 const getTokenInfo = (ssoToken) => {
   return new Promise(async (resolve, reject) => {
     AWS.config.credentials.get(async (err) => {
       if (!err) {
-        const credentials = AWS.config.credentials.data.Credentials;
-        const accessKeyId = credentials.AccessKeyId;
-        const secretAccessKey = credentials.SecretKey;
-        // Expiration
-        const sessionToken = credentials.SessionToken;
-        console.log('accessKeyId', accessKeyId);
-        console.log('secretAccessKey', secretAccessKey);
-        console.log('session token', sessionToken);
-        console.log('ssoToken', ssoToken);
-
+        console.log('process.env.COGNITO_JWKS', process.env.COGNITO_JWKS);
+        const jwks = process.env.COGNITO_JWKS ? JSON.parse(process.env.COGNITO_JWKS) : {};
+        // See Amazon cognito API to get jwks
+        // { "keys": [{ "alg": "RS256", "e": "AQAB", "kid": "Z2MsSpAMRQTIFjNSk1srITFdyfgZWM0ixym7PpyGZMs=", "kty": "RSA", "n": "wpKO6kRICmnE-Q_eVI5C7OB2xHgehu9EC6RvczvUEB3orV8wjltYKFN6kfqUawIKyPPKgUEZKasuPTlMlNExZZEtJL2EYC94EcdZWprXDdnutNWYMcciLsg9Kr1PzFnsgrDRpJRQMxxVk7xXj1SLMJLqlqQreuqBeNE6AtAGBrJJKuzsAO_2J9bgG-DGSN79R5lKKqzxvj1ZhcA95wiC5nN9vykUbkKDaV3-nfniE_BVvSMjnO-y_NDFpVA60MmTWJVlrvs4lGsIMMhI17kHzEk0Lfan44y02L-jIA1ygATUP8wcJFLOVY1WYbLW9KSg2G3594ux9HF_ps5q-klj-w", "use": "sig" }, { "alg": "RS256", "e": "AQAB", "kid": "T1wa7JZwouSg/hrnWMnmSnS6CT6E7TAy/bk2Arfwm3Q=", "kty": "RSA", "n": "tYuW15Eo0GMiLPwCcEd3LmXR3J1U1aW8qkm31dkqGFmSzXe5D8j7tIEfWwyfuwyKLMNfDYhI9mTZIiZrqgcRP9bp9xdxJLGY86rZiU9Zapx4XtGbJii2Rrjyz3TZ4leSien00SY7PYMk45w_Zx1A6xZ517cxLHuyFHRK0LepX5Q4zLydqzU3GfkKR1Fkxib0OMEybe0Dt9fJBeupwi5a5u--zZNvOX1QoD8ud4NSL-Si7sbbIpXeOfCjTMMxe5LSREv2_7wKsVSbhxHayMJlsjQLhjWNWSL_jTjrWZvvzwfVf6fwok_HIPwvxng90txBy8OXUzlkIzNgS1UTthRuzw", "use": "sig" }] };
         const [headerEncoded] = ssoToken.split('.');
         const buff = Buffer.from(headerEncoded, 'base64');
-        const header =  JSON.parse(buff.toString('ascii'));
+        const header = JSON.parse(buff.toString('ascii'));
         let jsonWebKey;
         for (let jwk of jwks.keys) {
           if (jwk.kid === header.kid) {
@@ -39,12 +31,7 @@ const getTokenInfo = (ssoToken) => {
         }
         const pem = jwkToPem(jsonWebKey);
         const payload = jwt.verify(ssoToken, pem, { algorithms: ['RS256'] });
-        console.log('payload 256', payload);
         resolve(payload);
-        // Get session parts
-        // username
-        // role
-        
       } else {
         reject(err.toString());
       }
@@ -76,11 +63,11 @@ module.exports = {
   },
 
   verifyToken: async (ctx) => {
-    const {ssoToken} = ctx.request.body;
+    const { ssoToken } = ctx.request.body;
 
-    const region = 'us-east-1';
-    const userPoolId = 'us-east-1_DZcKJ4Eeb';
-    const identityPoolId = 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
+    const region = process.env.COGNITO_REGION;
+    const userPoolId = process.env.COGNITO_USER_POOL_ID;
+    const identityPoolId = process.env.COGNITO_IDENTITY_POOL_ID; // 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
     AWS.config.region = region;
 
     const Logins = {};
@@ -101,6 +88,9 @@ module.exports = {
       let rolesToAdd = [];
       if (userModel) {
         // Update user role
+        // Map your user's AWS Cognito roles to Strapi roles
+        const roleMap = process.env.COGNITO_ROLE_MAPPING ? JSON.parse(process.env.COGNITO_ROLE_MAPPING) : [];
+        console.log('role map', roleMap);
         for (let role of roleMap) {
           if (tokenInfo['cognito:roles'].indexOf(role.awsRole) > -1) {
             const correspondingRoleInStapi = await strapi.query('role', 'admin').findOne({
@@ -109,7 +99,7 @@ module.exports = {
             rolesToAdd.push(correspondingRoleInStapi.id);
           }
         }
-        
+
         await strapi.query('user', 'admin').update({
           id: userModel.id
         }, {
@@ -142,7 +132,7 @@ module.exports = {
         })
       }
 
-      const processedUser = await strapi.query('user', 'admin').findOne({email: tokenInfo.email});
+      const processedUser = await strapi.query('user', 'admin').findOne({ email: tokenInfo.email });
       ctx.state.user = processedUser;
 
       const { user } = ctx.state;

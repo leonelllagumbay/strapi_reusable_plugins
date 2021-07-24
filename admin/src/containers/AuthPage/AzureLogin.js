@@ -7,29 +7,23 @@ import { auth } from 'strapi-helper-plugin';
 import { useHistory } from 'react-router-dom';
 
 let azureCode = ""; // Azure code
-const azureReturnCode = location.hash;
+const azureReturnCode = location.hash.replace('#', '?');
 if (azureReturnCode) {
-  const paramParts = azureReturnCode.split("&");
-
-  paramParts.forEach((part) => {
-    const indexOfCode = part.indexOf("code");
-    if (indexOfCode > -1) {
-      azureCode = part.substring(indexOfCode + 5, part.length);
-    }
-  });
+  const searchParams = new URLSearchParams(azureReturnCode);
+  azureCode = searchParams.get("code");
 }
 
 const AzureLogin = () => {
   const changeLocale = useChangeLanguage();
   const { push } = useHistory();
-  
+
   const { instance, accounts } = useMsal();
 
   const acquireToken = async () => {
     if (accounts && accounts[0]) {
       const response = await instance.acquireTokenSilent({
         ...loginRequest,
-          account: accounts[0]
+        account: accounts[0]
       });
       await verifyTokenAzure({
         azureToken: response.accessToken
