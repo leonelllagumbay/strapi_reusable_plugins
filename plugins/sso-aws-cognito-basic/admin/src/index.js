@@ -5,8 +5,6 @@ import Initializer from './containers/Initializer';
 import lifecycles from './lifecycles';
 import trads from './translations';
 
-import Settings from '../components/Settings';
-
 export default strapi => {
   const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
   const icon = pluginPkg.strapi.icon;
@@ -27,22 +25,27 @@ export default strapi => {
     mainComponent: App,
     name,
     preventComponentRendering: false,
-    settings: {
-      global: {
-        links: [
-          {
-            title: 'AWS Cognito Settings',
-            to: `${strapi.settingsBaseURL}/${pluginId}/settings`,
-            name: 'AWSCognitoSetting',
-            Component: Settings,
-            exact: false,
-            permissions: [{ action: 'plugins::sso-aws-cognito.cognito', subject: null }],
-          },
-        ],
-      },
-    },
     trads,
-    menu: null,
+    menu: {
+      pluginsSectionLinks: [
+        {
+          destination: `/plugins/${pluginId}`,
+          icon,
+          label: {
+            id: `${pluginId}.plugin.name`,
+            defaultMessage: name,
+          },
+          name,
+          permissions: [
+            // Uncomment to set the permissions of the plugin here
+            // {
+            //   action: '', // the action name should be plugins::plugin-name.actionType
+            //   subject: null,
+            // },
+          ],
+        },
+      ],
+    },
   };
 
   return strapi.registerPlugin(plugin);

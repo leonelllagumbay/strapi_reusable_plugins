@@ -3,15 +3,11 @@
   "version": "0.0.0",
   "description": "This is the description of the plugin.",
   "strapi": {
-    "name": "sso-aws-cognito",
+    "name": "sso-aws-cognito-basic",
     "icon": "plug",
-    "description": "Description of sso-aws-cognito plugin."
+    "description": "Description of sso-aws-cognito-basic plugin."
   },
-  "dependencies": {
-    "aws-sdk": "^2.953.0",
-    "jsonwebtoken": "^8.5.1",
-    "jwk-to-pem": "^2.0.5"
-  },
+  "dependencies": {},
   "author": {
     "name": "A Strapi developer",
     "email": "",

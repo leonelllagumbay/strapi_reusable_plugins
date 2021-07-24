@@ -17,13 +17,13 @@ module.exports = strapi => {
       console.log('init')
       try {
         // Set 1 as super admin
-        await strapi.query('role', 'admin').update({id: 1}, {name: 'Super Admin', description: 'Super admin used by Strapi developers'});
+        await strapi.query('role', 'admin').update({ id: 1 }, { name: 'Super Admin', description: 'Super admin used by Strapi developers' });
         // Set 2 as Administrator
-        await strapi.query('role', 'admin').update({id: 2}, {name: 'Admin', description: 'Ultragram CMS Administrators'});
+        await strapi.query('role', 'admin').update({ id: 2 }, { name: 'Admin', description: 'Ultragram CMS Administrators' });
         // Set 3 as Technologist
-        await strapi.query('role', 'admin').update({id: 3}, {name: 'Technologist', description: 'Users who can also upload dicom images and reports'});
+        await strapi.query('role', 'admin').update({ id: 3 }, { name: 'Technologist', description: 'Users who can also upload dicom images and reports' });
 
-      } catch(err) {
+      } catch (err) {
         console.log('query role admin err', err);
       }
 
@@ -31,7 +31,7 @@ module.exports = strapi => {
         // Make sure that admin has its minimum permissions to work
         // 1. Settings access users and role
         const mustHaveForUsers = [];
-        
+
         let permission;
 
         for (let mustHave of mustHaveForUsers) {
@@ -42,7 +42,7 @@ module.exports = strapi => {
                 action: mustHave.action,
                 subject: mustHave.subject
               });
-            } catch(err) {
+            } catch (err) {
               console.log('err hook 1', err, mustHave);
             }
           } else {
@@ -51,21 +51,21 @@ module.exports = strapi => {
                 role: mustHave.role,
                 action: mustHave.action
               });
-            } catch(err) {
+            } catch (err) {
               console.log('err hook 2', err, mustHave);
             }
           }
-          
+
           if (mustHave.remove) {
             if (permission) { // Remove the permission that the role should not have
               try {
                 await strapi.query('permission', 'admin').delete({
                   id: permission.id
                 });
-              } catch(err) {
+              } catch (err) {
                 console.log('err hook delete 1', err);
               }
-              
+
             }
           } else {
             if (!permission) {
@@ -78,10 +78,10 @@ module.exports = strapi => {
                   fields: mustHave.fields,
                   conditions: mustHave.conditions
                 });
-              } catch(err) {
+              } catch (err) {
                 console.log('err hook 3', err, mustHave);
               }
-              
+
             } else {
               // Update to make sure the roles and permissions are right
               try {
@@ -92,7 +92,7 @@ module.exports = strapi => {
                   fields: mustHave.fields,
                   conditions: mustHave.conditions
                 });
-              } catch(err) {
+              } catch (err) {
                 console.log('err hook 4', err, mustHave);
               }
             }
@@ -107,9 +107,9 @@ module.exports = strapi => {
         let permissionsForPublic = [];
         if (userRole) {
           permissionsForPublic = [{
-            type: 'sso-aws-cognito',
+            type: 'sso-aws-cognito-basic',
             role: userRole.id,
-            controller: 'sso-aws-cognito',
+            controller: 'sso-aws-cognito-basic',
             action: 'verifytoken',
             enabled: true,
           }, {
@@ -170,7 +170,7 @@ module.exports = strapi => {
               }, {
                 enabled: true
               });
-            } catch(err) {
+            } catch (err) {
               console.log('public permission err 1', err);
             }
           } else {
@@ -182,7 +182,7 @@ module.exports = strapi => {
                 action: permission.action,
                 enabled: true
               });
-            } catch(err) {
+            } catch (err) {
               console.log('public permission err 2', err);
             }
           }

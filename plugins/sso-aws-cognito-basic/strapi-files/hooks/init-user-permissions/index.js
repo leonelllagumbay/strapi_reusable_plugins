@@ -22,9 +22,9 @@ module.exports = strapi => {
         let permissionsForPublic = [];
         if (userRole) {
           permissionsForPublic = [{
-            type: 'sso-aws-cognito',
+            type: 'sso-aws-cognito-basic',
             role: userRole.id,
-            controller: 'sso-aws-cognito',
+            controller: 'sso-aws-cognito-basic',
             action: 'verifytoken',
             enabled: true,
           }];

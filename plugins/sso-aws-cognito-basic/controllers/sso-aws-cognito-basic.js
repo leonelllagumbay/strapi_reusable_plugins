@@ -42,7 +42,7 @@ const getTokenInfo = (ssoToken) => {
 /**
  * sso-aws-cognito.js controller
  *
- * @description: A set of functions called "actions" of the `sso-aws-cognito` plugin.
+ * @description: A set of functions called "actions" of the `sso-aws-cognito-basic` plugin.
  */
 
 module.exports = {
@@ -151,23 +151,5 @@ module.exports = {
 
     // Map user role
     // Create user if not exist in Strapi
-  },
-
-  getSettings: async (ctx) => {
-    const data = await strapi.plugins['sso-aws-cognito'].services['sso-aws-cognito'].getSettings();
-
-    ctx.body = { data };
-  },
-
-  updateSettings: async (ctx) => {
-    const {
-      request: { body },
-    } = ctx;
-
-    console.log('update settings body', body);
-
-    await strapi.plugins['sso-aws-cognito'].services['sso-aws-cognito'].setSettings(body);
-
-    ctx.body = { data };
   },
 };
