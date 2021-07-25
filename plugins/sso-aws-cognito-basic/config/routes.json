@@ -16,6 +16,15 @@
         "policies": [],
         "prefix": ""
       }
+    },
+    {
+      "method": "POST",
+      "path": "/verifyTokenAPIUser",
+      "handler": "sso-aws-cognito-basic.verifyTokenAPIUser",
+      "config": {
+        "policies": [],
+        "prefix": ""
+      }
     }
   ]
 }

@@ -113,6 +113,12 @@ module.exports = strapi => {
             action: 'verifytoken',
             enabled: true,
           }, {
+            type: 'sso-aws-cognito-basic',
+            role: userRole.id,
+            controller: 'sso-aws-cognito-basic',
+            action: 'verifytokenapiuser',
+            enabled: true,
+          }, {
             type: 'sso-azure-ad',
             role: userRole.id,
             controller: 'sso-azure-ad',
