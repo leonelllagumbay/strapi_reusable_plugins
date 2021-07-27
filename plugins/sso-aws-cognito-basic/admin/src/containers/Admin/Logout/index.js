@@ -13,10 +13,8 @@ import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reac
 import { get } from 'lodash';
 import { auth } from 'strapi-helper-plugin';
 import Wrapper from './components';
-import { useMsal } from "@azure/msal-react"; // Custom Azure logout
 
 const Logout = ({ history: { push } }) => {
-  const { instance } = useMsal(); // Custom Azure logout
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGoToMe = () => {

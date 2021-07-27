@@ -26,6 +26,11 @@
     jsonwebtoken "^8.5.1"
     uuid "^8.3.0"
 
+"@azure/msal-react@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@azure/msal-react/-/msal-react-1.0.1.tgz#69b2d6e2f78d56d64b01d6f2961a50b5961b3cc8"
+  integrity sha512-5e5+DYnu3/a9R/QUrH7rWKmq1UjYY13kSW0TAWZTf+GEUjIcV/+cJtTVg0RNBACIWU8PAVW8Epj3qfgPDfOctg==
+
 axios@^0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"

@@ -18,6 +18,7 @@ const AzureLogin = () => {
   const { push } = useHistory();
 
   const { instance, accounts } = useMsal();
+  console.log('ins', instance);
 
   const acquireToken = async () => {
     if (accounts && accounts[0]) {
@@ -31,6 +32,15 @@ const AzureLogin = () => {
     } else {
       console.log('accounts[0] not yet defined');
     }
+  }
+
+  const redirect = async () => {
+    instance.loginRedirect(loginRequest).catch(e => {
+      console.log('error', e);
+      strapi.notification.toggle({
+        message: `Azure redirect error`, type: 'warning'
+      });
+    });
   }
 
   const verifyTokenAzure = async (body, requestURL) => {
@@ -61,9 +71,7 @@ const AzureLogin = () => {
   };
 
   if (!azureCode) {
-    instance.loginRedirect(loginRequest).catch(e => {
-      strapi.notification.error('Azure redirect error');
-    });
+    redirect();
   } else { // Azure login
     acquireToken();
   }

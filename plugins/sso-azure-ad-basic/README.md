@@ -14,7 +14,7 @@ To authenticate, use the returned token as parameter. After authenticated, it wi
 
 This will work both for admin and API users.
 
-For API users, in the client pass the ssoToken (token returned after logging in to Cognito) to /verifyTokenAPIUser endpoint.
+For API users, in the client pass the azureToken (token returned after logging in from Azure) to /verifyTokenAPIUser endpoint.
   
 
 # Supported Strapi versions:
@@ -42,42 +42,14 @@ Create .env if not yet available on the project root directory
 
 Add the following variables:
 
-COGNITO_DOMAIN=https://{username}.auth.{region}.amazoncognito.com
+AZURE_AD_ROLE_MAPPING=[{"azureRole":"Application Administrator","strapiRole":"Super Admin"},{"azureRole":"Application Developer","strapiRole":"Technologist"}]
+AZURE_AD_ROLE_MAPPING_API_USERS=[{"azureRole":"Application Administrator","strapiRole":"Authenticated"}]
+AZURE_AD_CLIENT_ID=57e34ea2-2dae-4445-b7dc-5320cdfc969c
+AZURE_AD_REDIRECT_URL=http://localhost:8000/admin/auth/login
 
-COGNITO_CLIENT_ID=45ishi11kmir29u23p0qpih5as
-
-COGNITO_REDIRECT_URI=http://localhost:8000/admin/auth/login
-
-COGNITO_REGION=us-east-1
-
-COGNITO_USER_POOL_ID=us-east-1_DdcKJ1Eeb
-
-COGNITO_IDENTITY_POOL_ID=us-east-1:122db3b7-3232-45c2-8c93-abbcad58de1f
-
-COGNITO_ROLE_MAPPING=[{"awsRole":"arn:aws:iam::994583806537:role/Admin","strapiRole":"Super Admin"},
-
-COGNITO_ROLE_MAPPING_API_USERS=[] # If using API users
-
-COGNITO_JWKS={"keys":[{"alg":"RS256","e":"AQAB","kid":"Z2MsSpAMRQTIFjNSk1srITFdyfgZWM0ixym7PpyGZMs=","kty":"RSA","n":"wpKO6kRICmnE...","use":"sig"},{"alg":"RS256","e":"AQAB","kid":"T1wa7JZwouSg/hrnWMnmSnS6CT6E7TAy/bk2Arfwm3Q=","kty":"RSA","n":"tYuW15E...","use":"sig"}]}
-
-  See the official AWS Cognito documentation on how to get those values.
-
-## For array value like COGNITO_ROLE_MAPPING,:
-
-[{
-	awsRole: 'arn:aws:iam::994583806537:role/Admin',
-	strapiRole: 'Super Admin'
-}, {
-awsRole: 'arn:aws:iam::994583806537:role/Technologist',
-strapiRole: 'Technologist'
-}]
-
-### convert it to string like so
-
-[{"awsRole":"arn:aws:iam::994583806537:role/Admin","strapiRole":"Super Admin"},{"awsRole":"arn:aws:iam::994583806537:role/Technologist","strapiRole":"Technologist"}]
+### Note that AZURE_AD_ROLE_MAPPING and AZURE_AD_ROLE_MAPPING_API_USERS is a string representation of an array of objects
   
-
-### It is required that you map your Strapi roles to the corresponding role from AWS Cognito.
+### It is required that you map your Strapi roles to the corresponding role from Azure AD.
   
 
 ## Copy hooks file and folder

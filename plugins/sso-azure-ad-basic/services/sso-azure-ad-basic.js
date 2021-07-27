@@ -145,7 +145,7 @@ azureService.verifyTokenAzureActiveDirectory = async (ctx) => {
         id: userModel.id
       }, await azureService.getUserData(profileData, rolesToAdd));
     } else {
-      rolesToAdd = await azureService.mapRoles(rolesToAdd, roles, roleMap);
+      rolesToAdd = await azureService.mapRoles(rolesToAdd, roles);
       await strapi.query('user', 'admin').create(await azureService.getUserData(profileData, rolesToAdd))
     }
 

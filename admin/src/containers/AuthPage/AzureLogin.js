@@ -18,6 +18,7 @@ const AzureLogin = () => {
   const { push } = useHistory();
 
   const { instance, accounts } = useMsal();
+  console.log('instance', instance);
 
   const acquireToken = async () => {
     if (accounts && accounts[0]) {
