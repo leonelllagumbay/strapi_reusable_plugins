@@ -21,15 +21,15 @@ module.exports = strapi => {
         let permissionsForPublic = [];
         if (userRole) {
           permissionsForPublic = [{
-            type: 'sso-aws-cognito-basic',
+            type: 'sso-azure-ad-basic',
             role: userRole.id,
-            controller: 'sso-aws-cognito-basic',
-            action: 'verifytoken',
+            controller: 'sso-azure-ad-basic',
+            action: 'verifytokenazureactivedirectory',
             enabled: true,
           }, {
-            type: 'sso-aws-cognito-basic',
+            type: 'sso-azure-ad-basic',
             role: userRole.id,
-            controller: 'sso-aws-cognito-basic',
+            controller: 'sso-azure-ad-basic',
             action: 'verifytokenapiuser',
             enabled: true,
           }];

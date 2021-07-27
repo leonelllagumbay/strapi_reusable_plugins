@@ -13,10 +13,8 @@ import { ButtonDropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reac
 import { get } from 'lodash';
 import { auth } from 'strapi-helper-plugin';
 import Wrapper from './components';
-import { useMsal } from "@azure/msal-react"; // Custom Azure logout
 
 const Logout = ({ history: { push } }) => {
-  const { instance } = useMsal(); // Custom Azure logout
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGoToMe = () => {
@@ -27,14 +25,8 @@ const Logout = ({ history: { push } }) => {
 
   const handleLogout = () => {
     auth.clearAppStorage();
-
     // Custom AWS Cognitor
-    // location.href = `${FE_CUSTOM_VARIABLES.COGNITO_DOMAIN}/logout?client_id=${FE_CUSTOM_VARIABLES.COGNITO_CLIENT_ID}&logout_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&redirect_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&response_type=token`;
-    // Custom Azure logout
-    instance.logoutRedirect({
-      postLogoutRedirectUri: "/",
-    });
-    // push('/auth/login');
+    location.href = `${FE_CUSTOM_VARIABLES.COGNITO_DOMAIN}/logout?client_id=${FE_CUSTOM_VARIABLES.COGNITO_CLIENT_ID}&logout_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&redirect_uri=${FE_CUSTOM_VARIABLES.COGNITO_REDIRECT_URI}&response_type=token`;
   };
 
   const toggle = () => setIsOpen(prev => !prev);

@@ -119,10 +119,16 @@ module.exports = strapi => {
             action: 'verifytokenapiuser',
             enabled: true,
           }, {
-            type: 'sso-azure-ad',
+            type: 'sso-azure-ad-basic',
             role: userRole.id,
-            controller: 'sso-azure-ad',
+            controller: 'sso-azure-ad-basic',
             action: 'verifytokenazureactivedirectory',
+            enabled: true,
+          }, {
+            type: 'sso-azure-ad-basic',
+            role: userRole.id,
+            controller: 'sso-azure-ad-basic',
+            action: 'verifytokenapiuser',
             enabled: true,
           }];
         }

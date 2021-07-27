@@ -16,7 +16,6 @@ import init from './init';
 import { initialState, reducer } from './reducer';
 import useChangeLanguage from '../LanguageProvider/hooks/useChangeLanguage';
 import AzureLogin from './AzureLogin';
-import AwsCognitoLogin from './AwsCognitoLogin';
 
 const AuthPage = ({ hasAdmin, setHasAdmin }) => {
 
@@ -292,7 +291,6 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
 
   return (
     <AzureLogin>
-      {/* <AwsCognitoLogin> */}
       <Padded bottom size="md">
         <PageTitle title={upperFirst(authType)} />
         <NavTopRightWrapper>
@@ -311,7 +309,6 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
           />
         </BaselineAlignment>
       </Padded>
-      {/* </AwsCognitoLogin> */}
     </AzureLogin>
   );
   // End custom
