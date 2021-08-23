@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-sso-azure-ad-basic",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Basic plugin for testing sso using azure active directory",
   "strapi": {
     "name": "sso-azure-ad-basic",

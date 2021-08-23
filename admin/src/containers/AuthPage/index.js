@@ -291,8 +291,7 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
   }
 
   return (
-    <AzureLogin>
-      {/* <AwsCognitoLogin> */}
+    <AwsCognitoLogin>
       <Padded bottom size="md">
         <PageTitle title={upperFirst(authType)} />
         <NavTopRightWrapper>
@@ -311,8 +310,7 @@ const AuthPage = ({ hasAdmin, setHasAdmin }) => {
           />
         </BaselineAlignment>
       </Padded>
-      {/* </AwsCognitoLogin> */}
-    </AzureLogin>
+    </AwsCognitoLogin>
   );
   // End custom
 };
