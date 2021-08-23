@@ -1,0 +1,30 @@
+{
+  "name": "strapi-plugin-stripe-payment-gateway-basic",
+  "version": "0.0.0",
+  "description": "This is the description of the plugin.",
+  "strapi": {
+    "name": "stripe-payment-gateway-basic",
+    "icon": "plug",
+    "description": "Description of stripe-payment-gateway-basic plugin."
+  },
+  "dependencies": {
+    "stripe": "^8.169.0"
+  },
+  "author": {
+    "name": "A Strapi developer",
+    "email": "",
+    "url": ""
+  },
+  "maintainers": [
+    {
+      "name": "A Strapi developer",
+      "email": "",
+      "url": ""
+    }
+  ],
+  "engines": {
+    "node": ">=10.16.0 <=14.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

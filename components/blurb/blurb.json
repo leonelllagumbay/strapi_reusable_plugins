@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_blurb_blurbs",
+  "info": {
+    "name": "blurb",
+    "icon": "american-sign-language-interpreting",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "richtext"
+    },
+    "title": {
+      "type": "text"
+    }
+  }
+}

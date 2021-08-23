@@ -1,0 +1,22 @@
+{
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/payments/create-session",
+      "handler": "stripe-payment-gateway-basic.createSession",
+      "config": {
+        "policies": [],
+        "prefix": ""
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/webhook",
+      "handler": "stripe-payment-gateway-basic.webhook",
+      "config": {
+        "policies": [],
+        "prefix": ""
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_template_templates",
+  "info": {
+    "name": "Template",
+    "icon": "anchor"
+  },
+  "options": {},
+  "attributes": {
+    "pattern": {
+      "type": "richtext"
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}

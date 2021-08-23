@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "name": "Page",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "Header": {
+      "type": "dynamiczone",
+      "components": [
+        "blurb.blurb",
+        "template.template",
+        "pattern.pattern",
+        "response.response",
+        "template.template-2"
+      ]
+    }
+  }
+}

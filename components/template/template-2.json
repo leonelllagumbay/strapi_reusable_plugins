@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_template_template_2s",
+  "info": {
+    "name": "Template 2",
+    "icon": "arrow-circle-right"
+  },
+  "options": {},
+  "attributes": {
+    "forTemplate2": {
+      "type": "richtext"
+    }
+  }
+}
