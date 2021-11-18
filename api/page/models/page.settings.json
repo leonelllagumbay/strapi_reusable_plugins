@@ -22,8 +22,17 @@
         "template.template",
         "pattern.pattern",
         "response.response",
-        "template.template-2"
+        "template.template-2",
+        "header.site-selection"
       ]
+    },
+    "route": {
+      "type": "string"
+    },
+    "mainHeader": {
+      "type": "component",
+      "repeatable": false,
+      "component": "header.site-selection"
     }
   }
 }

@@ -144,12 +144,13 @@ ssoService.verifyTokenAPIUser = async (ctx) => {
  */
 ssoService.verifyToken = async (ctx) => {
   const { ssoToken } = ctx.request.body;
+  console.log("verify token sso A");
 
   const region = process.env.COGNITO_REGION;
   const userPoolId = process.env.COGNITO_USER_POOL_ID;
   const identityPoolId = process.env.COGNITO_IDENTITY_POOL_ID; // 'us-east-1:122db3b7-8819-45c0-8c93-abbcad58de1f';
   AWS.config.region = region;
-
+  console.log("AWS.config.region", AWS.config.region);
   const Logins = {};
   Logins[
     `cognito-idp.${region}.amazonaws.com/${userPoolId}`
@@ -158,9 +159,11 @@ ssoService.verifyToken = async (ctx) => {
     IdentityPoolId: identityPoolId,
     Logins,
   });
+  console.log("identityPoolId", identityPoolId);
 
   try {
     const tokenInfo = await ssoService.getTokenInfo(ssoToken);
+    console.log("token info", tokenInfo);
     // Query user by email
     const userModel = await strapi.query('user', 'admin').findOne({
       email: tokenInfo.email
@@ -225,6 +228,7 @@ ssoService.verifyToken = async (ctx) => {
       },
     };
   } catch (error) {
+    console.log("error in be", error);
     return ctx.badRequest(error);
   }
 }

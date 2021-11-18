@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-stripe-payment-gateway-basic",
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "stripe-payment-gateway-basic",
@@ -8,6 +8,7 @@
     "description": "Description of stripe-payment-gateway-basic plugin."
   },
   "dependencies": {
+    "@stripe/stripe-js": "^1.21.1",
     "stripe": "^8.169.0"
   },
   "author": {

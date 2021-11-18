@@ -7,6 +7,7 @@
 import React, { memo, useState } from 'react';
 // import PropTypes from 'prop-types';
 import pluginId from '../../pluginId';
+import '@stripe/stripe-js';
 
 const PUBLISHABLE_KEY = 'pk_test_51JBx6wCvdblaPUlmSK0wLLAy11aiyUKsyrjOnnmxdVmmaXTMfvgaQoroOAgC7zwLpdN5Qn4P9SSXomIqmm1MFkDs004z3dpOei';
 
@@ -33,7 +34,7 @@ const HomePage = () => {
     };
 
     setIsLoading(true);
-    const url = `http://localhost:1440/payments/create-session`;
+    const url = `${strapi.backendURL}/payments/create-session`;
 
     fetch(url, requestOptions)
       .then(response => response.json())
@@ -48,8 +49,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>{pluginId}&apos;s HomePage</h1>
-      <p>Happy coding Onel!</p>
+      <p>Happy coding Onel! {pluginId}</p>
       <button onClick={pay}>Pay now</button>
       {isLoading ? <div>Loading</div> : ''}
     </div>

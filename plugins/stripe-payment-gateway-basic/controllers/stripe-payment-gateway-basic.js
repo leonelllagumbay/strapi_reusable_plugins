@@ -11,12 +11,15 @@ const unparsed = require("koa-body/unparsed.js");
 
 const signing_secret = process.env.SIGNING_SECRET;
 const secret_key = process.env.SECRET_KEY;
-const stripe = Stripe(secret_key);
+// const stripe = Stripe(secret_key);
+
 
 const paymentService = {};
 
 paymentService.webhook = async (ctx) => {
   const payload = ctx.request.body;
+
+  const stripe = Stripe(secret_key);
   
   const sig = ctx.request.header['stripe-signature'];
   let event;

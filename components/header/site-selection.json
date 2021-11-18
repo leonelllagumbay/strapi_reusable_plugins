@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_header_site_selections",
+  "info": {
+    "name": "SiteSelection",
+    "icon": "backward",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "header.header"
+    },
+    "Visible": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

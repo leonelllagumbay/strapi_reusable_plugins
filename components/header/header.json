@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_site_list_headers",
+  "info": {
+    "name": "SiteList",
+    "icon": "align-justify",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "route": {
+      "type": "string"
+    }
+  }
+}
